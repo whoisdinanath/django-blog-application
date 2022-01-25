@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block content %}
+
+         
+
+        <hr class="tm-hr-primary tm-mb-55">
+             
+
+<div class="row tm-row tm-mb-120">
+    <div class="col-12">
+        <h2 class="tm-color-primary tm-post-title tm-mb-60">Contact Us</h2>
+    </div>
+    <div class="col-lg-7 tm-contact-left">
+        <form method="POST" action="" class="mb-5 ml-auto mr-0 tm-contact-form">  
+            {% csrf_token %}
+            {% for field in form %}                      
+            <div class="form-group row mb-4">
+                <label for="name" class="col-sm-3  tm-color-primary">{{field.label}}</label>
+                <div class="col-sm-9">
+                    {{field}}                            
+                </div>
+            </div>
+            {% endfor %}
+            <div class="form-group row text-right">
+                <div class="col-12">
+                    <button class="tm-btn tm-btn-primary tm-btn-small">Submit</button>                        
+                </div>                            
+            </div>                                
+        </form>
+    </div>
+    <div class="col-lg-5 tm-contact-right">
+        <address class="mb-4 tm-color-gray">
+            {{about.address}}
+        </address>
+        <span class="d-block">
+            Tel:
+            <a href="tel:060-070-0980" class="tm-color-gray">{{about.telephone}}</a>
+        </span>
+        <span class="mb-4 d-block">
+            Email:
+            <a href="mailto:info@company.com" class="tm-color-gray">{{about.email}}</a>
+        </span>
+
+        <ul class="tm-social-links">
+            <li class="mb-2">
+                <a href="{{about.social_fb}}" class="d-flex align-items-center justify-content-center">
+                    <i class="fab fa-facebook"></i>
+                </a>
+            </li>
+            <li class="mb-2">
+                <a href="{{about.social_twitter}}" class="d-flex align-items-center justify-content-center">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </li>
+            <li class="mb-2">
+                <a href="{{about.social_yt}}" class="d-flex align-items-center justify-content-center">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </li>
+            <li class="mb-2">
+                <a href="{{about.social_insta}}" class="d-flex align-items-center justify-content-center mr-0">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+{%  endblock content %}

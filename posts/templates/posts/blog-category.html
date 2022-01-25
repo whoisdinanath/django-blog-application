@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+{% for category in categories %}
+
+<ul>
+    <li>
+        <h1><a href="{% url 'home-category' category.id%}">{{category}}</a></h1>
+        <hr class="tm-hr-primary tm-mb-55">
+    </li>
+</ul>
+
+
+{% endfor %}
+
+
+{% endblock content %}

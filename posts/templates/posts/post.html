@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+        
+        {% if post.thumbnail %}   
+        <div class="row tm-row">
+            <div class="col-12">
+                <hr class="tm-hr-primary tm-mb-55">
+                <img height="auto" width="100%" src="{{post.thumbnail.url}}" class="tm-mb-40">
+            </div>
+        </div>
+        {% endif %}
+        <div class="row tm-row">
+            <div class="col-lg-8 tm-post-col">
+                <div class="tm-post-full">                    
+                    <div class="mb-4">
+                        <h2 class="pt-2 tm-color-primary tm-post-title">{{post.title}}</h2>
+                        <p class="tm-mb-40">{{post.created | date:"F d Y"}}, {{post.author|title}}</p> 
+                        {% if request.user.is_staff %}
+                        <a href="{% url 'update-blog' post.id%}">Edit Blog</a> &nbsp;
+                        <a href="{% url 'delete-blog' post.id%}">Delete Blog</a>
+                        {% endif %}</p>
+                        <p style="color: rgb(26, 24, 24);">{{post.content|safe}}</p>
+                        <span class="d-block text-right tm-color-primary">{{post.category}}</span>
+                    </div>
+                    
+                    <!-- Comments -->
+                    <div>
+                        <h2 class="tm-color-primary tm-post-title">Comments</h2>
+                        <hr class="tm-hr-primary tm-mb-45">
+                        {% for comment in post.comment_set.all %}
+                        <div class="tm-comment tm-mb-45">
+                            
+                            <div>
+                                <div style="color: rgb(68, 68, 241);">{{comment.user_name}}</div>
+                                <span style="color: black;">{{comment.body}}</span>
+                                <div class="d-flex justify-content-between">
+                                   
+                                    <span class="tm-color-primary">{{comment.created | date:"F d Y"}}</span>
+                                </div>                                                 
+                            </div>                                
+                        </div>
+                        {% endfor %}
+                        
+                        <form action="" method="POST" class="mb-5 tm-comment-form">
+                            {% csrf_token %}
+                            <h2 class="tm-color-primary tm-post-title mb-4">Leave a comment</h2>
+                            {% for field in form %}
+                            <div>{{field.label}}:</div>
+                            <div class="mb-4">
+                                {{field}}
+                            </div>
+                            {% endfor %}
+                            <div class="text-right">
+                                <button class="tm-btn tm-btn-primary tm-btn-small">Submit</button>                        
+                            </div>                                
+                        </form>                          
+                    </div>
+                </div>
+            </div>
+            <aside class="col-lg-4 tm-aside-col">
+                <div class="tm-post-sidebar">
+                    <hr class="mb-3 tm-hr-primary">
+                    <h2 class="mb-4 tm-post-title tm-color-primary">Categories</h2>
+                    <ul class="tm-mb-75 pl-5 tm-category-list">
+                        {% for category in categories %}
+                        <li><a href="#" class="tm-color-primary">{{category.name}}</a></li>
+
+                        {% endfor %}
+                    </ul>
+                    <hr class="mb-3 tm-hr-primary">
+                    
+                    <h2 class="tm-mb-40 tm-post-title tm-color-primary">Related Posts</h2>
+                    
+                    {% for post in related %}
+                    <a href="#" class="d-block tm-mb-40">
+                        <figure>
+                            <img src="{{post.thumbnail.url}}" alt="Image" class="mb-3 img-fluid">
+                            <figcaption class="tm-color-primary">{{post.title}}</figcaption>
+                        </figure>
+                    </a>
+                    {% endfor %}
+                    
+                </div>                    
+            </aside>
+        </div>
+
+
+{% endblock content %}
