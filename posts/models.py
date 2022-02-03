@@ -23,9 +23,9 @@ class Blog(models.Model):
 
     def get_label(self):
         if self.created.date() > date.today() - datetime.timedelta(days=4):
-           return "New" 
+           return True 
         else:
-           return None
+           return False
 
     @property
     def getCommentCount(self):

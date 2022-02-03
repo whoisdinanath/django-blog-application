@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row tm-row">
+    <div class="col-12">
+        <form id="searchForm" method="GET" class="form-inline tm-mb-80 tm-search-form">                
+            <input class="form-control tm-search-input" value='{{query}}' id="formInput#search" name="query" type="text" placeholder="Search..." aria-label="Search">
+            <button class="tm-search-button" type="submit">
+                <i class="fas fa-search tm-search-icon" aria-hidden="true"></i>
+            </button>                                
+        </form>
+    </div>                
+</div>            
+<div class="row tm-row">
+    {% for post in posts %}
+    <article class="col-12 col-md-6 tm-post">
+        <hr class="tm-hr-primary">
+        <a href="{% url 'single-post' post.id%}" class="effect-lily tm-post-link tm-pt-60">
+            <div class="tm-post-link-inner">
+                <img src="img/img-01.jpg" alt="Image" class="img-fluid">                            
+            </div>
+            {% if post.get_label %}
+            <span class="position-absolute tm-new-badge">New</span>
+            {% endif %}
+            <h2 class="tm-pt-30 tm-color-primary tm-post-title">{{post.title}}</h2>
+        </a>                    
+        <p class="tm-pt-30">
+            {{post.overview}}
+        </p>
+        <div class="d-flex justify-content-between tm-pt-45">
+            <span class="tm-color-primary">{{post.category}}</span>
+            <span class="tm-color-primary">{{post.created|date:"d M Y"}}</span>
+        </div>
+        <hr>
+        <div class="d-flex justify-content-between">
+            <span>{{post.comment_counts}} comments</span>
+            <span>by {{post.author|title}}</span>
+        </div>
+    </article>
+    {% endfor %}
+    
+</div>
+{% if posts.has_other_pages %}
+
+<div class="row tm-row tm-mt-30 tm-mb-20">
+    
+    <div class="tm-paging-wrapper">
+        <nav class="tm-paging-nav d-inline-block">
+            <ul style="margin: auto;">
+                {% if posts.has_previous %}
+                <li class="tm-paging-item ">
+                    <a href="?page={{posts.previous_page_number}}" data-page='{{posts.previous_page_number}}' class="mb-2 tm-btn page-link tm-paging-link">&#10094;</a>
+                </li>
+                {% endif %}
+                {% for page in custom_index %}
+                {% if page == posts.number %}
+                <li class="tm-paging-item active">
+                    <a href="?page={{page}}" data-page='{{page}}' class="mb-2 tm-btn page-link tm-paging-link">{{page}}</a>
+                </li>
+                {% else %}
+                <li class="tm-paging-item ">
+                    <a href="?page={{page}}" data-page='{{page}}'class="mb-2 tm-btn page-link tm-paging-link">{{page}}</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+                {% if posts.has_next %}
+                <li class="tm-paging-item ">
+                    <a href="?page={{posts.next_page_number}}" data-page='{{posts.next_page_number}}' class="mb-2 tm-btn page-link tm-paging-link">&#10095;</a>
+                </li>
+                {% endif %}
+                
+            </ul>
+        </nav>
+    </div>                
+</div>
+
+{% endif %}
+{% endblock content %}

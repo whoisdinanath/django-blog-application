@@ -18,7 +18,7 @@ def home(request):
     
     
     page = request.GET.get('page')
-    results = 6
+    results = 2
     paginator = Paginator(posts, results)
     try:
         posts = paginator.page(page)
@@ -29,11 +29,11 @@ def home(request):
         page = paginator.num_pages
         posts = paginator.page(page)
 
-    leftIndex = (int(page)  - 4  )
+    leftIndex = (int(page)  - 1 )
     if leftIndex < 1:
         leftIndex = 1
 
-    rightIndex = (int(page)+ 5)
+    rightIndex = (int(page)+ 2)
     if rightIndex > paginator.num_pages:
         rightIndex = paginator.num_pages+1
 
@@ -51,12 +51,12 @@ def categoryHome(request, pk):
     query = ''
     if request.GET.get('query'):
         query = request.GET.get('query')
-    categories = Category.objects.filter(name__icontains=query)
-    posts = Blog.objects.distinct().filter(Q(category__id=pk) | Q(title__icontains=query) | Q(overview__icontains=query) | Q(category__in=categories))
+    posts = Blog.objects.filter(category__id=pk)
+    posts = posts.distinct().filter(Q(title__icontains=query) | Q(overview__icontains=query))
     
     
     page = request.GET.get('page')
-    results = 6
+    results = 2
     paginator = Paginator(posts, results)
     try:
         posts = paginator.page(page)
@@ -67,11 +67,11 @@ def categoryHome(request, pk):
         page = paginator.num_pages
         posts = paginator.page(page)
 
-    leftIndex = (int(page)  - 4  )
+    leftIndex = (int(page)  - 1  )
     if leftIndex < 1:
         leftIndex = 1
 
-    rightIndex = (int(page)+ 5)
+    rightIndex = (int(page)+ 2)
     if rightIndex > paginator.num_pages:
         rightIndex = paginator.num_pages+1
 
