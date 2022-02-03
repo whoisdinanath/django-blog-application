@@ -18,7 +18,7 @@ def home(request):
     
     
     page = request.GET.get('page')
-    results = 2
+    results = 8
     paginator = Paginator(posts, results)
     try:
         posts = paginator.page(page)
@@ -56,7 +56,7 @@ def categoryHome(request, pk):
     
     
     page = request.GET.get('page')
-    results = 2
+    results = 8
     paginator = Paginator(posts, results)
     try:
         posts = paginator.page(page)
