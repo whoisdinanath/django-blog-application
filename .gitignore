@@ -1,2 +1,4 @@
 .vscode
 .env
+static
+db.sqlite3
